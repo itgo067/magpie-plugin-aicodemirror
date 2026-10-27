@@ -10,14 +10,6 @@ const PROTOCOL = {
   },
   responses: {
     npm: "@ai-sdk/openai",
-    path: "/api/codex/backend-api/codex",
-  },
-  chat: {
-    npm: "@ai-sdk/openai-compatible",
-    path: "/api/gemini/v1",
-  },
-  grok: {
-    npm: "@ai-sdk/openai",
     path: "/v1",
   },
 }
@@ -26,8 +18,8 @@ const EFFORTS = ["low", "medium", "high"]
 const BUDGET = { low: 4096, medium: 8192, high: 16_000 }
 const CLAUDE = { protocol: "anthropic", context: 1_000_000, output: 128_000, input: ["text", "image", "pdf"] }
 const OPENAI = { protocol: "responses", context: 1_050_000, output: 128_000, input: ["text", "image", "pdf"] }
-const GEMINI = { protocol: "chat", context: 1_048_576, output: 65_536, input: ["text", "image"] }
-const GROK = { protocol: "grok", context: 500_000, output: 500_000, input: ["text", "image"] }
+const GEMINI = { protocol: "responses", context: 1_048_576, output: 65_536, input: ["text", "image"] }
+const GROK = { protocol: "responses", context: 500_000, output: 500_000, input: ["text", "image"] }
 
 const MODELS = [
   { ...CLAUDE, id: "claude-fable-5-1", name: "Claude Fable 5.1", cost: [10, 50, 12.5, 0.25] },
@@ -186,7 +178,6 @@ export const AICodeMirrorAuthPlugin = async (input, options) => {
         if (auth?.type !== "api" || typeof auth.key !== "string" || !auth.key.trim()) return {}
         const key = auth.key.trim()
         return {
-          baseURL: defaultEndpoint,
           apiKey: key,
           async fetch(request, init) {
             const headers = new Headers(init?.headers ?? request?.headers ?? {})

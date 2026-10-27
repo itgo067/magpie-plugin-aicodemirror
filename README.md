@@ -2,7 +2,7 @@
 
 将 [AICodeMirror](https://www.aicodemirror.ai/) 接入 [Magpie](https://usemagpie.ai) / [OpenCode](https://opencode.ai)，在同一个 `aicodemirror` provider 中提供 **Claude、OpenAI、Gemini、Grok** 四族共 25 个模型。
 
-插件按模型自动选择 Anthropic Messages、OpenAI Responses 或 OpenAI Chat Completions，无需全局切换协议。运行时依赖为零，AI SDK 由 Magpie 宿主提供。
+Claude 使用 Anthropic Messages，OpenAI、Gemini、Grok 统一使用官方 `/v1` Responses，无需全局切换协议。运行时依赖为零，AI SDK 由 Magpie 宿主提供。
 
 ## 安装与登录
 
@@ -47,9 +47,9 @@ magpie plugin options opencode-aicodemirror-auth '{"baseURL":"https://api.aicode
 | 模型族 | AI SDK | 相对 baseURL 的路径 | 接口 |
 | --- | --- | --- | --- |
 | Claude | `@ai-sdk/anthropic` | `/api/claudecode/v1` | Anthropic Messages |
-| OpenAI | `@ai-sdk/openai` | `/api/codex/backend-api/codex` | OpenAI Responses |
-| Gemini | `@ai-sdk/openai-compatible` | `/api/gemini/v1` | Chat Completions |
-| Grok | `@ai-sdk/openai` | `/v1` | xAI Responses（与 `xai.responses()` 线协议相同） |
+| OpenAI | `@ai-sdk/openai` | `/v1` | Responses |
+| Gemini | `@ai-sdk/openai` | `/v1` | Responses |
+| Grok | `@ai-sdk/openai` | `/v1` | Responses（与 `xai.responses()` 线协议相同） |
 
 每个模型都显式保存自己的 SDK 和 URL，因此四族模型可以同时出现在一个 provider 中。所有模型声明工具调用和 `low` / `medium` / `high` 推理档位；Claude 使用 `thinking.budgetTokens`，其他协议使用 `reasoningEffort`。
 

@@ -22,18 +22,18 @@ test("baseURL selects only the two supported origins", () => {
   expect(pickBaseURL("https://evil.example")).toBe(GLOBAL_ORIGIN)
 })
 
-test("each model family uses its own wire API", () => {
+test("Claude uses Anthropic and the other families use the official Responses API", () => {
   expect(endpoint(byId("claude-opus-5-5"))).toEqual({
     npm: "@ai-sdk/anthropic",
     base: `${GLOBAL_ORIGIN}/api/claudecode/v1`,
   })
   expect(endpoint(byId("gpt-6-astra"))).toEqual({
     npm: "@ai-sdk/openai",
-    base: `${GLOBAL_ORIGIN}/api/codex/backend-api/codex`,
+    base: `${GLOBAL_ORIGIN}/v1`,
   })
   expect(endpoint(byId("gemini-4-argon"), CHINA_ORIGIN)).toEqual({
-    npm: "@ai-sdk/openai-compatible",
-    base: `${CHINA_ORIGIN}/api/gemini/v1`,
+    npm: "@ai-sdk/openai",
+    base: `${CHINA_ORIGIN}/v1`,
   })
   expect(endpoint(byId("grok-4.7"))).toEqual({
     npm: "@ai-sdk/openai",
@@ -99,8 +99,8 @@ test("model() returns a full OpenCode model with per-model routing", () => {
   expect(out.providerID).toBe("aicodemirror")
   expect(out.api).toEqual({
     id: "gemini-4-argon",
-    url: `${CHINA_ORIGIN}/api/gemini/v1`,
-    npm: "@ai-sdk/openai-compatible",
+    url: `${CHINA_ORIGIN}/v1`,
+    npm: "@ai-sdk/openai",
   })
   expect(out.capabilities.toolcall).toBe(true)
   expect(out.capabilities.input.image).toBe(true)
@@ -125,8 +125,8 @@ test("config hook creates all models and preserves user overrides", async () => 
   expect(p.models["claude-opus-5-5"].name).toBe("custom")
   expect(p.models["claude-opus-5-5"].cost.input).toBe(4)
   expect(p.models["claude-opus-5-5"].provider.api).toBe(`${CHINA_ORIGIN}/api/claudecode/v1`)
-  expect(p.models["gpt-6-astra"].provider.api).toBe(`${CHINA_ORIGIN}/api/codex/backend-api/codex`)
-  expect(p.models["gemini-4-argon"].provider.api).toBe(`${CHINA_ORIGIN}/api/gemini/v1`)
+  expect(p.models["gpt-6-astra"].provider.api).toBe(`${CHINA_ORIGIN}/v1`)
+  expect(p.models["gemini-4-argon"].provider.api).toBe(`${CHINA_ORIGIN}/v1`)
 })
 
 test("config hook creates provider from scratch", async () => {
@@ -153,7 +153,7 @@ test("loader signs actual fetch requests with bearer and x-api-key", async () =>
   try {
     const plugin = await AICodeMirrorAuthPlugin({}, { baseURL: CHINA_ORIGIN })
     const got = await plugin.auth.loader(async () => ({ type: "api", key: " sk-test " }))
-    expect(got.baseURL).toBe(`${CHINA_ORIGIN}/api/claudecode/v1`)
+    expect(got.baseURL).toBeUndefined()
     expect(got.apiKey).toBe("sk-test")
     await got.fetch("https://api.claudecode.net.cn/api/claudecode/v1/messages", {
       headers: { "x-existing": "yes" },
