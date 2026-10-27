@@ -137,6 +137,37 @@ test("config hook creates provider from scratch", async () => {
   expect(cfg.provider.aicodemirror.models["grok-4.5"].tool_call).toBe(true)
 })
 
+test("provider editor switch selects the China origin dynamically", async () => {
+  let enabled = false
+  const input = {
+    magpie: {
+      option(provider, key) {
+        expect(provider).toBe("aicodemirror")
+        expect(key).toBe("china_optimized")
+        return enabled
+      },
+    },
+  }
+  const plugin = await AICodeMirrorAuthPlugin(input, undefined)
+  expect(plugin.auth.options).toEqual([
+    {
+      key: "china_optimized",
+      label: "国内优化线路",
+      description: "开启后使用 api.claudecode.net.cn；关闭时使用全球高保线路 api.aicodemirror.ai。",
+    },
+  ])
+  const globalCfg = {}
+  await plugin.config(globalCfg)
+  expect(globalCfg.provider.aicodemirror.models["grok-4.5"].provider.api).toBe(`${GLOBAL_ORIGIN}/v1`)
+
+  enabled = true
+  const chinaCfg = {}
+  await plugin.config(chinaCfg)
+  expect(chinaCfg.provider.aicodemirror.models["grok-4.5"].provider.api).toBe(`${CHINA_ORIGIN}/v1`)
+  const models = await plugin.provider.models({}, { auth: { type: "api", key: "sk-test" } })
+  expect(models["gpt-6-astra"].api.url).toBe(`${CHINA_ORIGIN}/v1`)
+})
+
 test("loader rejects missing or non-API authentication", async () => {
   const plugin = await AICodeMirrorAuthPlugin({}, undefined)
   expect(await plugin.auth.loader(async () => ({ type: "oauth" }))).toEqual({})

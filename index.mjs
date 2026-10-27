@@ -154,24 +154,33 @@ function authHeaders(key) {
 }
 
 export const AICodeMirrorAuthPlugin = async (input, options) => {
-  const origin = pickBaseURL(options?.baseURL)
-  const defaultEndpoint = `${origin}${PROTOCOL.anthropic.path}`
+  const configuredOrigin = pickBaseURL(options?.baseURL)
+  const origin = () =>
+    input?.magpie?.option(PROVIDER, "china_optimized") ? CHINA_ORIGIN : configuredOrigin
 
   return {
     config: async (cfg) => {
+      const base = origin()
       cfg.provider ??= {}
       const was = cfg.provider[PROVIDER] ?? {}
       cfg.provider[PROVIDER] = {
         name: "AICodeMirror",
         npm: PROTOCOL.anthropic.npm,
-        api: defaultEndpoint,
+        api: `${base}${PROTOCOL.anthropic.path}`,
         ...was,
-        models: mergeModels(configModels(origin), was.models),
+        models: mergeModels(configModels(base), was.models),
       }
     },
 
     auth: {
       provider: PROVIDER,
+      options: [
+        {
+          key: "china_optimized",
+          label: "国内优化线路",
+          description: "开启后使用 api.claudecode.net.cn；关闭时使用全球高保线路 api.aicodemirror.ai。",
+        },
+      ],
       methods: [{ type: "api", label: "AICodeMirror API Key", placeholder: "sk-…" }],
       async loader(getAuth) {
         const auth = await getAuth()
@@ -193,7 +202,7 @@ export const AICodeMirrorAuthPlugin = async (input, options) => {
       id: PROVIDER,
       async models(provider, { auth } = {}) {
         if (auth?.type !== "api" || !auth.key) return provider.models
-        return staticModels(origin)
+        return staticModels(origin())
       },
     },
   }

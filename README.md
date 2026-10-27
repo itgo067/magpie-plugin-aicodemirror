@@ -22,13 +22,9 @@ magpie plugin add github:itgo067/magpie-plugin-aicodemirror
 
 ## 线路选择
 
-默认使用全球高保线路：
+默认使用全球高保线路 `https://api.aicodemirror.ai`。在 Magpie 的 AICodeMirror provider 编辑器中开启 **“国内优化线路”**，即可切换到 `https://api.claudecode.net.cn`；关闭开关即恢复全球高保线路。开关会立即参与后续模型配置和请求路由，无需重装插件。
 
-```text
-https://api.aicodemirror.ai
-```
-
-国内直连可切换为国内优化线路：
+也可以通过 CLI 设置：
 
 ```sh
 magpie plugin options opencode-aicodemirror-auth '{"baseURL":"https://api.claudecode.net.cn"}'
@@ -40,7 +36,7 @@ magpie plugin options opencode-aicodemirror-auth '{"baseURL":"https://api.claude
 magpie plugin options opencode-aicodemirror-auth '{"baseURL":"https://api.aicodemirror.ai"}'
 ```
 
-`baseURL` 只接受上述两个地址，空值或其他地址会回退到全球高保线路，避免 API Key 被发送到非预期主机。`magpie plugin options` 使用安装后的 npm 包名，而不是 GitHub 仓库名。
+UI 的“国内优化线路”开关优先于 CLI 的 `baseURL`。`baseURL` 只接受上述两个地址，空值或其他地址会回退到全球高保线路，避免 API Key 被发送到非预期主机。`magpie plugin options` 使用安装后的 npm 包名，而不是 GitHub 仓库名。
 
 ## 协议与模型路由
 

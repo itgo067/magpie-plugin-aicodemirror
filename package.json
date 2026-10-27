@@ -1,6 +1,6 @@
 {
   "name": "opencode-aicodemirror-auth",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Magpie / OpenCode provider plugin for AICodeMirror: Claude, OpenAI, Gemini and Grok",
   "type": "module",
   "main": "./index.mjs",
