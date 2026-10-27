@@ -93,7 +93,7 @@ jobs:
           import { setTimeout } from 'node:timers/promises'
           const pkg = JSON.parse(readFileSync('package.json', 'utf8'))
           const url = `https://registry.npmjs.org/${pkg.name.replace('/', '%2f')}/${process.env.VERSION}`
-          for (let left = 12; left > 0; left--) {
+          for (let left = 40; left > 0; left--) {
             const res = await fetch(url)
             if (res.ok) {
               const body = await res.json()
@@ -104,7 +104,7 @@ jobs:
             if (res.status !== 404 && res.status < 500) {
               throw new Error(`registry.npmjs.org answered ${res.status} for ${url}`)
             }
-            await setTimeout(5000)
+            await setTimeout(15000)
           }
           throw new Error(`${pkg.name}@${process.env.VERSION} is still not on the public registry: check the publish step's log`)
           JS
