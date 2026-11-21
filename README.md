@@ -84,6 +84,8 @@ magpie provider test aicodemirror grok-4.7
 | `gpt-6-sol` | $2 | $10 | $2.5 | $0.2 |
 | `gpt-5.6-sol` | $5 | $30 | $6.25 | $0.5 |
 | `gpt-5.6-terra` | $2 | $12 | $2.5 | $0.2 |
+| `gemini-4-hydrogen` | $1.5 | $7.5 | — | $0.075 |
+| `gemini-4-carbon` | $2 | $10 | — | $0.1 |
 | `gemini-4-argon` | $2 | $10 | — | $0.1 |
 | `gemini-3.8-flash` | $0.75 | $3.75 | — | $0.075 |
 | `gemini-3-flash-preview` | $0.5 | $3 | — | $0.05 |

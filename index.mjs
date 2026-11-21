@@ -44,6 +44,8 @@ const MODELS = [
   { ...OPENAI, id: "gpt-5.6-sol", name: "GPT-5.6 Sol", context: 1_000_000, cost: [5, 30, 6.25, 0.5] },
   { ...OPENAI, id: "gpt-5.6-terra", name: "GPT-5.6 Terra", context: 1_000_000, cost: [2, 12, 2.5, 0.2] },
 
+  { ...GEMINI, id: "gemini-4-hydrogen", name: "Gemini 4 Hydrogen", cost: [1.5, 7.5, 0, 0.075] },
+  { ...GEMINI, id: "gemini-4-carbon", name: "Gemini 4 Carbon", cost: [2, 10, 0, 0.1] },
   { ...GEMINI, id: "gemini-4-argon", name: "Gemini 4 Argon", output: 32_768, cost: [2, 10, 0, 0.1] },
   { ...GEMINI, id: "gemini-3.8-flash", name: "Gemini 3.8 Flash", cost: [0.75, 3.75, 0, 0.075] },
   { ...GEMINI, id: "gemini-3-flash-preview", name: "Gemini 3 Flash Preview", cost: [0.5, 3, 0, 0.05] },
