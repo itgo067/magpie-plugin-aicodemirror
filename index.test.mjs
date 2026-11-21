@@ -41,10 +41,10 @@ test("Claude uses Anthropic and the other families use the official Responses AP
   })
 })
 
-test("catalog contains all 29 unique models in four families", () => {
-  expect(MODELS).toHaveLength(29)
-  expect(new Set(MODELS.map((m) => m.id)).size).toBe(29)
-  expect(MODELS.filter((m) => m.protocol === "anthropic")).toHaveLength(12)
+test("catalog contains all 30 unique models in four families", () => {
+  expect(MODELS).toHaveLength(30)
+  expect(new Set(MODELS.map((m) => m.id)).size).toBe(30)
+  expect(MODELS.filter((m) => m.protocol === "anthropic")).toHaveLength(13)
   expect(MODELS.filter((m) => m.id.startsWith("gpt-"))).toHaveLength(8)
   expect(MODELS.filter((m) => m.id.startsWith("gemini-"))).toHaveLength(5)
   expect(MODELS.filter((m) => m.id.startsWith("grok-"))).toHaveLength(4)
@@ -121,7 +121,7 @@ test("config hook creates all models and preserves user overrides", async () => 
   await plugin.config(cfg)
   const p = cfg.provider.aicodemirror
   expect(p.name).toBe("mine")
-  expect(Object.keys(p.models)).toHaveLength(29)
+  expect(Object.keys(p.models)).toHaveLength(30)
   expect(p.models["claude-opus-5-5"].name).toBe("custom")
   expect(p.models["claude-opus-5-5"].cost.input).toBe(4)
   expect(p.models["claude-opus-5-5"].provider.api).toBe(`${CHINA_ORIGIN}/api/claudecode/v1`)
@@ -203,7 +203,7 @@ test("models hook is static and does not invent unknown free models", async () =
   const provider = { models: { existing: true } }
   expect(await plugin.provider.models(provider, {})).toBe(provider.models)
   const out = await plugin.provider.models(provider, { auth: { type: "api", key: "sk-test" } })
-  expect(Object.keys(out)).toHaveLength(29)
+  expect(Object.keys(out)).toHaveLength(30)
   expect(out["gpt-6-astra"].api.npm).toBe("@ai-sdk/openai")
   expect(Object.values(out).every((m) => m.free === undefined)).toBe(true)
   expect(staticModels(GLOBAL_ORIGIN)["grok-4.7"].limit.context).toBe(500_000)

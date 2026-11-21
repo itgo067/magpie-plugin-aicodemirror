@@ -64,9 +64,10 @@ magpie provider test aicodemirror grok-4.7
 
 | 模型 | 输入 | 输出 | 缓存创建 | 缓存读取 |
 | --- | ---: | ---: | ---: | ---: |
+| `claude-fable-5-2` | $8 | $40 | $10 | $0.2 |
 | `claude-fable-5-1` | $10 | $50 | $12.5 | $0.25 |
 | `claude-opus-5-5` | $4 | $20 | $5 | $0.2 |
-| `claude-sonnet-5-5` | $2 | $10 | $2.5 | $0.2 |
+| `claude-sonnet-5-5` | $2 | $10 | $2.5 | $0.1 |
 | `claude-haiku-5-5` | $0.1 | $0.5 | $0.125 | $0.01 |
 | `claude-opus-5` | $5 | $25 | $6.25 | $0.5 |
 | `claude-fable-5` | $10 | $50 | $12.5 | $1 |

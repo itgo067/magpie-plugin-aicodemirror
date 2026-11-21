@@ -22,9 +22,10 @@ const GEMINI = { protocol: "responses", context: 1_048_576, output: 65_536, inpu
 const GROK = { protocol: "responses", context: 500_000, output: 500_000, input: ["text", "image"] }
 
 const MODELS = [
+  { ...CLAUDE, id: "claude-fable-5-2", name: "Claude Fable 5.2", cost: [8, 40, 10, 0.2] },
   { ...CLAUDE, id: "claude-fable-5-1", name: "Claude Fable 5.1", cost: [10, 50, 12.5, 0.25] },
   { ...CLAUDE, id: "claude-opus-5-5", name: "Claude Opus 5.5", cost: [4, 20, 5, 0.2] },
-  { ...CLAUDE, id: "claude-sonnet-5-5", name: "Claude Sonnet 5.5", cost: [2, 10, 2.5, 0.2] },
+  { ...CLAUDE, id: "claude-sonnet-5-5", name: "Claude Sonnet 5.5", cost: [2, 10, 2.5, 0.1] },
   { ...CLAUDE, id: "claude-haiku-5-5", name: "Claude Haiku 5.5", cost: [0.1, 0.5, 0.125, 0.01] },
   { ...CLAUDE, id: "claude-opus-5", name: "Claude Opus 5", cost: [5, 25, 6.25, 0.5] },
   { ...CLAUDE, id: "claude-fable-5", name: "Claude Fable 5", cost: [10, 50, 12.5, 1] },
