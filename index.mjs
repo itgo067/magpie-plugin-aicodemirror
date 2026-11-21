@@ -35,6 +35,8 @@ const MODELS = [
   { ...CLAUDE, id: "claude-sonnet-4-6", name: "Claude Sonnet 4.6", output: 64_000, cost: [3, 15, 3.75, 0.3] },
   { ...CLAUDE, id: "claude-haiku-4-5-20251001", name: "Claude Haiku 4.5", context: 200_000, output: 64_000, cost: [1, 5, 1.25, 0.1] },
 
+  { ...OPENAI, id: "gpt-6.2-astra", name: "GPT-6.2 Astra", cost: [8, 40, 10, 0.4] },
+  { ...OPENAI, id: "gpt-6.2-sol", name: "GPT-6.2 Sol", cost: [2, 10, 2.5, 0.1] },
   { ...OPENAI, id: "gpt-6-astra", name: "GPT-6 Astra", cost: [10, 50, 12.5, 1] },
   { ...OPENAI, id: "gpt-6.1-terra", name: "GPT-6.1 Terra", cost: [1, 5, 1.25, 0.05] },
   { ...OPENAI, id: "gpt-6.1-sol", name: "GPT-6.1 Sol", cost: [2, 10, 2.5, 0.1] },
